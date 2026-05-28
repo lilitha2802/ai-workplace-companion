@@ -96,7 +96,7 @@ function EmailPage() {
           </Button>
         </div>
 
-        <AiOutput value={output} onChange={setOutput} loading={mut.isPending} />
+        <AiOutput value={output} onChange={setOutput} loading={mut.isPending} filename="email" />
       </div>
     </AppShell>
   );

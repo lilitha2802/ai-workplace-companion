@@ -57,7 +57,7 @@ function NotesPage() {
             Summarize meeting
           </Button>
         </div>
-        <AiOutput value={output} onChange={setOutput} loading={mut.isPending} />
+        <AiOutput value={output} onChange={setOutput} loading={mut.isPending} filename="meeting-notes" />
       </div>
     </AppShell>
   );

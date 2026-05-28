@@ -3,11 +3,12 @@ import { useRef, useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Send, Loader2, MessageSquare, User, Sparkles } from "lucide-react";
+import { Send, Loader2, MessageSquare, User, Sparkles, FileDown, FileText } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { chatAi } from "@/lib/ai/generate.functions";
+import { downloadMarkdown, downloadPDF } from "@/lib/download";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/chat")({
@@ -46,9 +47,42 @@ function ChatPage() {
     mut.mutate(next);
   };
 
+  const transcript = messages
+    .map((m) => `**${m.role === "user" ? "You" : "AI"}:**\n${m.content}`)
+    .join("\n\n");
+
+  const hasMessages = messages.length > 0;
+
   return (
     <AppShell title="AI Chatbot" description="Your always-on workplace copilot">
       <div className="mx-auto max-w-3xl rounded-xl border border-border bg-card shadow-card flex flex-col h-[calc(100vh-12rem)]">
+        {hasMessages && (
+          <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/40">
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Conversation
+            </span>
+            <div className="flex items-center gap-1">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => downloadMarkdown(transcript, "chat-transcript")}
+                title="Download as Markdown"
+              >
+                <FileText className="h-4 w-4" />
+                <span className="ml-1 text-xs">.md</span>
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => downloadPDF(transcript, "chat-transcript")}
+                title="Download as PDF"
+              >
+                <FileDown className="h-4 w-4" />
+                <span className="ml-1 text-xs">.pdf</span>
+              </Button>
+            </div>
+          </div>
+        )}
         <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.length === 0 && (
             <div className="text-center text-muted-foreground py-16">

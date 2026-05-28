@@ -68,7 +68,7 @@ function ResearchPage() {
             primary sources.
           </p>
         </div>
-        <AiOutput value={output} onChange={setOutput} loading={mut.isPending} />
+        <AiOutput value={output} onChange={setOutput} loading={mut.isPending} filename="research" />
       </div>
     </AppShell>
   );
