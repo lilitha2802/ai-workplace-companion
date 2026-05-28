@@ -3,11 +3,12 @@ import { useRef, useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Send, Loader2, MessageSquare, User, Sparkles } from "lucide-react";
+import { Send, Loader2, MessageSquare, User, Sparkles, FileDown, FileText } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { chatAi } from "@/lib/ai/generate.functions";
+import { downloadMarkdown, downloadPDF } from "@/lib/download";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/chat")({

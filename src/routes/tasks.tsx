@@ -64,7 +64,7 @@ function TasksPage() {
             Generate plan
           </Button>
         </div>
-        <AiOutput value={output} onChange={setOutput} loading={mut.isPending} />
+        <AiOutput value={output} onChange={setOutput} loading={mut.isPending} filename="task-plan" />
       </div>
     </AppShell>
   );
