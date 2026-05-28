@@ -47,6 +47,12 @@ function ChatPage() {
     mut.mutate(next);
   };
 
+  const transcript = messages
+    .map((m) => `**${m.role === "user" ? "You" : "AI"}:**\n${m.content}`)
+    .join("\n\n");
+
+  const hasMessages = messages.length > 0;
+
   return (
     <AppShell title="AI Chatbot" description="Your always-on workplace copilot">
       <div className="mx-auto max-w-3xl rounded-xl border border-border bg-card shadow-card flex flex-col h-[calc(100vh-12rem)]">
