@@ -56,6 +56,33 @@ function ChatPage() {
   return (
     <AppShell title="AI Chatbot" description="Your always-on workplace copilot">
       <div className="mx-auto max-w-3xl rounded-xl border border-border bg-card shadow-card flex flex-col h-[calc(100vh-12rem)]">
+        {hasMessages && (
+          <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/40">
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Conversation
+            </span>
+            <div className="flex items-center gap-1">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => downloadMarkdown(transcript, "chat-transcript")}
+                title="Download as Markdown"
+              >
+                <FileText className="h-4 w-4" />
+                <span className="ml-1 text-xs">.md</span>
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => downloadPDF(transcript, "chat-transcript")}
+                title="Download as PDF"
+              >
+                <FileDown className="h-4 w-4" />
+                <span className="ml-1 text-xs">.pdf</span>
+              </Button>
+            </div>
+          </div>
+        )}
         <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.length === 0 && (
             <div className="text-center text-muted-foreground py-16">
