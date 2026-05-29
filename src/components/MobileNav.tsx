@@ -6,6 +6,7 @@ import {
   ListChecks,
   Search,
   MessageSquare,
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +17,7 @@ const items = [
   { url: "/tasks", icon: ListChecks, label: "Tasks" },
   { url: "/research", icon: Search, label: "Research" },
   { url: "/chat", icon: MessageSquare, label: "Chat" },
+  { url: "/portfolio", icon: User, label: "Me" },
 ] as const;
 
 export function MobileNav() {

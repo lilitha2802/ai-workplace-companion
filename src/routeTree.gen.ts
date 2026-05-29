@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as ResearchRouteImport } from './routes/research'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as NotesRouteImport } from './routes/notes'
 import { Route as EmailRouteImport } from './routes/email'
 import { Route as ChatRouteImport } from './routes/chat'
@@ -24,6 +25,11 @@ const TasksRoute = TasksRouteImport.update({
 const ResearchRoute = ResearchRouteImport.update({
   id: '/research',
   path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NotesRoute = NotesRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
   '/notes': typeof NotesRoute
+  '/portfolio': typeof PortfolioRoute
   '/research': typeof ResearchRoute
   '/tasks': typeof TasksRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
   '/notes': typeof NotesRoute
+  '/portfolio': typeof PortfolioRoute
   '/research': typeof ResearchRoute
   '/tasks': typeof TasksRoute
 }
@@ -69,15 +77,38 @@ export interface FileRoutesById {
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
   '/notes': typeof NotesRoute
+  '/portfolio': typeof PortfolioRoute
   '/research': typeof ResearchRoute
   '/tasks': typeof TasksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/email' | '/notes' | '/research' | '/tasks'
+  fullPaths:
+    | '/'
+    | '/chat'
+    | '/email'
+    | '/notes'
+    | '/portfolio'
+    | '/research'
+    | '/tasks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/email' | '/notes' | '/research' | '/tasks'
-  id: '__root__' | '/' | '/chat' | '/email' | '/notes' | '/research' | '/tasks'
+  to:
+    | '/'
+    | '/chat'
+    | '/email'
+    | '/notes'
+    | '/portfolio'
+    | '/research'
+    | '/tasks'
+  id:
+    | '__root__'
+    | '/'
+    | '/chat'
+    | '/email'
+    | '/notes'
+    | '/portfolio'
+    | '/research'
+    | '/tasks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -85,6 +116,7 @@ export interface RootRouteChildren {
   ChatRoute: typeof ChatRoute
   EmailRoute: typeof EmailRoute
   NotesRoute: typeof NotesRoute
+  PortfolioRoute: typeof PortfolioRoute
   ResearchRoute: typeof ResearchRoute
   TasksRoute: typeof TasksRoute
 }
@@ -103,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/research'
       fullPath: '/research'
       preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notes': {
@@ -141,19 +180,10 @@ const rootRouteChildren: RootRouteChildren = {
   ChatRoute: ChatRoute,
   EmailRoute: EmailRoute,
   NotesRoute: NotesRoute,
+  PortfolioRoute: PortfolioRoute,
   ResearchRoute: ResearchRoute,
   TasksRoute: TasksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

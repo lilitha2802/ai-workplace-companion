@@ -7,6 +7,7 @@ import {
   Search,
   MessageSquare,
   Sparkles,
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ const items = [
   { title: "Task Planner", url: "/tasks", icon: ListChecks },
   { title: "Research", url: "/research", icon: Search },
   { title: "AI Chatbot", url: "/chat", icon: MessageSquare },
+  { title: "Portfolio", url: "/portfolio", icon: User },
 ] as const;
 
 export function AppSidebar() {
